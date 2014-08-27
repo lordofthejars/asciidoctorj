@@ -6,12 +6,12 @@ import static org.hamcrest.CoreMatchers.is;
 
 import java.io.File;
 
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Test;
 
 public class WhenANoneStandardBackendIsSet {
 
-    private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+    private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
     
     @Test
     public void epub3_should_be_rendered_for_epub3_backend() {

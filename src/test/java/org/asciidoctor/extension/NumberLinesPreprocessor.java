@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 import java.util.Map;
 
-import org.asciidoctor.ast.Document;
+import org.asciidoctor.ast.RubyDocument;
 
 public class NumberLinesPreprocessor extends Preprocessor {
 
@@ -14,7 +14,7 @@ public class NumberLinesPreprocessor extends Preprocessor {
 	}
 
 	@Override
-	public PreprocessorReader process(Document document,
+	public PreprocessorReader process(RubyDocument rubyDocument,
 			PreprocessorReader reader) {
 
 		assertThat(reader.getLineno(), is(1));

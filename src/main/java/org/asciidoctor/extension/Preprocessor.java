@@ -3,8 +3,8 @@ package org.asciidoctor.extension;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.asciidoctor.ast.RubyDocument;
 import org.asciidoctor.ast.Document;
-import org.asciidoctor.ast.DocumentRuby;
 
 public abstract class Preprocessor extends Processor {
 
@@ -16,10 +16,10 @@ public abstract class Preprocessor extends Processor {
         super(config);
     }
 
-    public abstract PreprocessorReader process(Document document, PreprocessorReader reader);
+    public abstract PreprocessorReader process(RubyDocument rubyDocument, PreprocessorReader reader);
     
-    public PreprocessorReader process(DocumentRuby document, PreprocessorReader reader) {
-    	return this.process(document(document), reader);
+    public PreprocessorReader process(Document document, PreprocessorReader reader) {
+    	return this.process(rubyDocument(document), reader);
     }
     
 }

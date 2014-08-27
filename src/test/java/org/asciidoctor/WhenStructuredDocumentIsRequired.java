@@ -14,7 +14,7 @@ import java.util.Map;
 import org.asciidoctor.ast.ContentPart;
 import org.asciidoctor.ast.DocumentHeader;
 import org.asciidoctor.ast.StructuredDocument;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -24,7 +24,7 @@ public class WhenStructuredDocumentIsRequired {
 	@Rule
 	public TemporaryFolder testFolder = new TemporaryFolder();
 
-	private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 
 	@Test
 	public void empty_parent_title_makes_subsection_be_null_when_is_parsed() {
@@ -50,8 +50,8 @@ public class WhenStructuredDocumentIsRequired {
 
 		DocumentHeader header = document.getHeader();
 
-		assertThat(header.getDocumentTitle().getMain(), is("Sample Document"));
-		assertThat(header.getPageTitle(), is("Sample Document"));
+		assertThat(header.getDocumentTitle().getMain(), is("Sample RubyDocument"));
+		assertThat(header.getPageTitle(), is("Sample RubyDocument"));
 
 		Map<String, Object> attributes = header.getAttributes();
 		assertThat((String) attributes.get("revdate"), is("2013-05-20"));
@@ -105,7 +105,7 @@ public class WhenStructuredDocumentIsRequired {
 		DocumentHeader header = document.getHeader();
 
 		assertThat(header.getDocumentTitle().getMain(), is("TODO"));
-		assertThat(header.getDocumentTitle().getSubtitle(), is("Document Title"));
+		assertThat(header.getDocumentTitle().getSubtitle(), is("RubyDocument Title"));
 		
 		Map<String, Object> attributes = header.getAttributes();
 		assertThat((String) attributes.get("type"), is("object.type"));
@@ -136,11 +136,11 @@ public class WhenStructuredDocumentIsRequired {
 	public void title_should_be_retrieved_from_simple_string() {
 
 		StructuredDocument document = asciidoctor.readDocumentStructure(
-				"= Sample Document", new HashMap<String, Object>());
+				"= Sample RubyDocument", new HashMap<String, Object>());
 
 		DocumentHeader header = document.getHeader();
 
-		assertThat(header.getDocumentTitle().getMain(), is("Sample Document"));
+		assertThat(header.getDocumentTitle().getMain(), is("Sample RubyDocument"));
 
 		List<ContentPart> parts = document.getParts();
 

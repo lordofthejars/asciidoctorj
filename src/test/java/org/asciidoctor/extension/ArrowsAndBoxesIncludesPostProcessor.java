@@ -1,13 +1,13 @@
 package org.asciidoctor.extension;
 
-import org.asciidoctor.ast.DocumentRuby;
+import org.asciidoctor.ast.Document;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 public class ArrowsAndBoxesIncludesPostProcessor extends Postprocessor {
 
-    public ArrowsAndBoxesIncludesPostProcessor(DocumentRuby documentRuby) {
+    public ArrowsAndBoxesIncludesPostProcessor(Document document) {
         //super(documentRuby);
         super(null);
     }
@@ -26,7 +26,7 @@ public class ArrowsAndBoxesIncludesPostProcessor extends Postprocessor {
     }
 
     @Override
-    public String process(org.asciidoctor.ast.Document document, String output) {
+    public String process(org.asciidoctor.ast.RubyDocument rubyDocument, String output) {
         return null;
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 import org.asciidoctor.ast.Author;
 import org.asciidoctor.ast.DocumentHeader;
 import org.asciidoctor.ast.RevisionInfo;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -21,7 +21,7 @@ public class WhenDocumentHeaderIsRequired {
 	@Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 	
-	private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 	
 	@Test
 	public void doctitle_blocks_and_attributes_should_be_returned() {
@@ -29,8 +29,8 @@ public class WhenDocumentHeaderIsRequired {
 		DocumentHeader header = asciidoctor.readDocumentHeader(new File("target/test-classes/documentheaders.asciidoc"));
 		
 		
-		assertThat(header.getDocumentTitle().getMain(), is("Sample Document"));
-		assertThat(header.getPageTitle(), is("Sample Document"));
+		assertThat(header.getDocumentTitle().getMain(), is("Sample RubyDocument"));
+		assertThat(header.getPageTitle(), is("Sample RubyDocument"));
 		
 		Map<String, Object> attributes = header.getAttributes();
 		assertThat((String)attributes.get("revdate"), is("2013-05-20"));

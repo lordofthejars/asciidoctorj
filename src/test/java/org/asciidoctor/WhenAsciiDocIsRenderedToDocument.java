@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.asciidoctor.ast.AbstractBlock;
-import org.asciidoctor.ast.Document;
+import org.asciidoctor.ast.RubyDocument;
 import org.asciidoctor.ast.Section;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Test;
 
 public class WhenAsciiDocIsRenderedToDocument {
 
-    private static final String DOCUMENT = "= Document Title\n" + 
+    private static final String DOCUMENT = "= RubyDocument Title\n" + 
             "\n" + 
             "preamble\n" + 
             "\n" + 
@@ -37,12 +37,12 @@ public class WhenAsciiDocIsRenderedToDocument {
             "\n" + 
             "paragraph";
     
-    private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+    private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 
     @Test
     public void should_return_section_blocks() {
-        Document document = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
-        Section section = (Section) document.blocks().get(1);
+        RubyDocument rubyDocument = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
+        Section section = (Section) rubyDocument.blocks().get(1);
         assertThat(section.index(), is(0));
         assertThat(section.sectname(), is("sect1"));
         assertThat(section.special(), is(false));
@@ -51,25 +51,25 @@ public class WhenAsciiDocIsRenderedToDocument {
     @Test
     public void should_return_blocks_from_a_document() {
         
-        Document document = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
-        assertThat(document.doctitle(), is("Document Title"));
+        RubyDocument rubyDocument = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
+        assertThat(rubyDocument.doctitle(), is("RubyDocument Title"));
         
     }
     
     @Test
     public void should_return_a_document_object_from_string() {
         
-        Document document = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
-        assertThat(document.doctitle(), is("Document Title"));
+        RubyDocument rubyDocument = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
+        assertThat(rubyDocument.doctitle(), is("RubyDocument Title"));
     }
     
     @Test
     public void should_find_elements_from_document() {
         
-        Document document = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
+        RubyDocument rubyDocument = asciidoctor.load(DOCUMENT, new HashMap<String, Object>());
         Map<Object, Object> selector = new HashMap<Object, Object>();
         selector.put("context", ":image");
-        List<AbstractBlock> findBy = document.findBy(selector);
+        List<AbstractBlock> findBy = rubyDocument.findBy(selector);
         assertThat(findBy, hasSize(2));
         
         assertThat((String)findBy.get(0).attributes().get("target"), is("tiger.png"));

@@ -23,8 +23,8 @@ import java.util.Map;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Options;
 import org.asciidoctor.SafeMode;
-import org.asciidoctor.ast.DocumentRuby;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.ast.Document;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -39,7 +39,7 @@ public class WhenJavaExtensionIsRegistered {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
-    private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+    private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 
     class RubyIncludeSource extends IncludeProcessor {
 
@@ -48,7 +48,7 @@ public class WhenJavaExtensionIsRegistered {
         }
 
         @Override
-        public void process(DocumentRuby document, PreprocessorReader reader, String target,
+        public void process(Document document, PreprocessorReader reader, String target,
                 Map<String, Object> attributes) {
             StringBuilder content = readContent(target);
             reader.push_include(content.toString(), target, target, 1, attributes);
@@ -112,7 +112,7 @@ public class WhenJavaExtensionIsRegistered {
         javaExtensionRegistry.includeProcessor(new IncludeProcessor(new HashMap<String, Object>()) {
 
             @Override
-            public void process(DocumentRuby documentRuby, PreprocessorReader reader, String target,
+            public void process(Document document, PreprocessorReader reader, String target,
                     Map<String, Object> attributes) {
                 StringBuilder content = readContent(target);
                 reader.push_include(content.toString(), target, target, 1, attributes);

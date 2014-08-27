@@ -9,7 +9,7 @@ import org.jruby.Ruby;
 import org.jruby.RubyArray;
 import org.jruby.RubyObject;
 
-public class AbstractBlockImpl implements AbstractBlock {
+public class RubyAbstractBlock implements AbstractBlock {
 
     private static final String BLOCK_CLASS = "Block";
     private static final String SECTION_CLASS = "Section";
@@ -17,7 +17,7 @@ public class AbstractBlockImpl implements AbstractBlock {
     protected AbstractBlock delegate;
     protected Ruby runtime;
 
-    public AbstractBlockImpl(AbstractBlock blockDelegate, Ruby runtime) {
+    public RubyAbstractBlock(AbstractBlock blockDelegate, Ruby runtime) {
         this.delegate = blockDelegate;
         this.runtime = runtime;
     }
@@ -84,7 +84,7 @@ public class AbstractBlockImpl implements AbstractBlock {
     }
 
     @Override
-    public DocumentRuby document() {
+    public Document document() {
         return delegate.document();
     }
 
@@ -109,15 +109,15 @@ public class AbstractBlockImpl implements AbstractBlock {
     private AbstractBlock overrideRubyObjectToJavaObject(RubyObject rubyObject) {
         if (BLOCK_CLASS.equals(rubyObject.getMetaClass().getBaseName())) {
             Block blockRuby = RubyUtils.rubyToJava(runtime, rubyObject, Block.class);
-            return new BlockImpl(blockRuby, runtime);
+            return new RubyBlock(blockRuby, runtime);
         }
         else if (SECTION_CLASS.equals(rubyObject.getMetaClass().getBaseName())) {
             Section blockRuby = RubyUtils.rubyToJava(runtime, rubyObject, Section.class);
-            return new SectionImpl(blockRuby, runtime);
+            return new RubySection(blockRuby, runtime);
         }
         else {
             AbstractBlock blockRuby = RubyUtils.rubyToJava(runtime, rubyObject, AbstractBlock.class);
-            return new AbstractBlockImpl(blockRuby, runtime);
+            return new RubyAbstractBlock(blockRuby, runtime);
         }
     }
     

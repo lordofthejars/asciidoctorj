@@ -6,7 +6,7 @@ import org.asciidoctor.internal.AsciidoctorModule;
 import org.asciidoctor.internal.RubyUtils;
 import org.jruby.Ruby;
 
-public class RubyExtensionRegistry {
+public class RubyExtensionRegistry implements ExtensionRegistry {
 
     private AsciidoctorModule asciidoctorModule;
     private Ruby rubyRuntime;

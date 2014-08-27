@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.jruby.Ruby;
 
-public class BlockImpl extends AbstractBlockImpl implements Block {
+public class RubyBlock extends RubyAbstractBlock implements Block {
     private Block blockDelegate;
 
-    public BlockImpl(Block blockDelegate, Ruby runtime) {
+    public RubyBlock(Block blockDelegate, Ruby runtime) {
         super(blockDelegate, runtime);
         this.blockDelegate = blockDelegate;
     }

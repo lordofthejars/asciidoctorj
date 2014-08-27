@@ -12,7 +12,7 @@ public class WhenEnvironmentVariablesAreSet {
 	@Test
 	public void they_should_be_available_inside_ruby_engine() {
 		
-		JRubyAsciidoctor asciidoctor = (JRubyAsciidoctor) JRubyAsciidoctor.create("My_gem_path");
+		JRubyAsciidoctorOld asciidoctor = (JRubyAsciidoctorOld) JRubyAsciidoctorOld.create("My_gem_path");
 		IRubyObject evalScriptlet = asciidoctor.rubyRuntime.evalScriptlet("ENV['GEM_PATH']");
 		
 		RubyString gemPathValue = (RubyString)evalScriptlet;

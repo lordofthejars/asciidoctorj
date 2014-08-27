@@ -10,7 +10,6 @@ import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.DirectoryWalker;
 import org.asciidoctor.GlobDirectoryWalker;
 import org.asciidoctor.Options;
-import org.asciidoctor.internal.JRubyAsciidoctor;
 import org.asciidoctor.internal.JRubyRuntimeContext;
 import org.asciidoctor.internal.RubyHashUtil;
 import org.asciidoctor.internal.RubyUtils;
@@ -101,9 +100,9 @@ public class AsciidoctorInvoker {
     private Asciidoctor buildAsciidoctorJInstance(AsciidoctorCliOptions asciidoctorCliOptions) {
         Asciidoctor asciidoctor;
         if(asciidoctorCliOptions.isLoadPaths()) {
-         asciidoctor = JRubyAsciidoctor.create(asciidoctorCliOptions.getLoadPaths());   
+         asciidoctor = Asciidoctor.Factory.create(asciidoctorCliOptions.getLoadPaths());   
         } else {
-            asciidoctor = JRubyAsciidoctor.create();
+            asciidoctor = Asciidoctor.Factory.create();
         }
         return asciidoctor;
     }
@@ -123,7 +122,7 @@ public class AsciidoctorInvoker {
             if (inputFile.canRead()) {
 
                 String renderedFile = asciidoctor
-                        .renderFile(inputFile, options);
+                        .convertFile(inputFile, options);
                 if (renderedFile != null) {
                     output.append(renderedFile).append(
                             System.getProperty("line.separator"));

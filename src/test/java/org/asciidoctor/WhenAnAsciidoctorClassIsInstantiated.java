@@ -29,7 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -42,7 +42,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 	@Rule
 	public TemporaryFolder testFolder = new TemporaryFolder();
 
-	private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 
 	@Test
 	public void content_should_be_read_from_reader_and_written_to_writer() throws IOException, SAXException,

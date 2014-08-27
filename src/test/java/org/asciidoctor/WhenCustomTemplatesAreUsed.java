@@ -6,7 +6,7 @@ import static org.asciidoctor.OptionsBuilder.options;
 
 import java.io.File;
 
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class WhenCustomTemplatesAreUsed {
 
-    private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+    private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
     
     @Test
     public void document_should_be_rendered_using_given_template_dir() {

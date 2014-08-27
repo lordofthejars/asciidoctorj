@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.asciidoctor.Asciidoctor;
-import org.asciidoctor.ast.Document;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.ast.RubyDocument;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Test;
 
 public class WhenReaderIsManipulatedInExtension {
 
-	private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 
 
 	@Test

@@ -2,7 +2,7 @@ package org.asciidoctor.extension;
 
 import java.util.Map;
 
-import org.asciidoctor.ast.Document;
+import org.asciidoctor.ast.RubyDocument;
 
 public class ChangeAttributeValuePreprocessor extends Preprocessor {
 
@@ -11,10 +11,10 @@ public class ChangeAttributeValuePreprocessor extends Preprocessor {
 	}
 
 	@Override
-	public PreprocessorReader process(Document document,
+	public PreprocessorReader process(RubyDocument rubyDocument,
 			PreprocessorReader reader) {
 
-		document.getAttributes().put("content", "Alex");
+		rubyDocument.getAttributes().put("content", "Alex");
 		
 		return reader;
 	}

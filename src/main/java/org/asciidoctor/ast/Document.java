@@ -1,53 +1,38 @@
 package org.asciidoctor.ast;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.asciidoctor.internal.RubyHashUtil;
-import org.asciidoctor.internal.RubyUtils;
-import org.jruby.Ruby;
-import org.jruby.RubyHash;
-import org.jruby.RubyObject;
-import org.jruby.runtime.builtin.IRubyObject;
+public interface Document extends AbstractBlock {
 
-public class Document extends AbstractBlockImpl implements DocumentRuby {
+    /**
+     * Get doc title
+     * 
+     * @param options
+     *            to get the doc title. Key should be Ruby symbols.
+     * @return String if partition flag is not set to false or not present, Title if partition is set to true.
+     * @see Title
+     */
+    Object doctitle(Map<Object, Object> opts);
 
-    private DocumentRuby documentDelegate;
+    /**
+     * 
+     * @return page title
+     */
+    String title();
 
-    public Document(DocumentRuby documentRuby, Ruby runtime) {
-        super(documentRuby, runtime);
-        this.documentDelegate = documentRuby;
-    }
+    /**
+     * 
+     * @return attributes defined in document
+     */
+    Map<String, Object> getAttributes();
 
-    public DocumentRuby getDocumentRuby() {
-        return documentDelegate;
-    }
+    /**
+     * 
+     * @return basebackend attribute value
+     */
+    boolean basebackend(String backend);
 
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes();
-    }
-
-    @Override
-    public boolean basebackend(String backend) {
-        return documentDelegate.basebackend(backend);
-    }
-
-    @Override
-    public Object doctitle(Map<Object, Object> opts) {
-        RubyHash mapWithSymbols = RubyHashUtil.convertMapToRubyHashWithSymbolsIfNecessary(runtime, opts);
-
-        Object doctitle = documentDelegate.doctitle(mapWithSymbols);
-
-        if (doctitle instanceof IRubyObject) {
-            doctitle = RubyUtils.rubyToJava(runtime, (IRubyObject) doctitle, Title.class);
-        }
-
-        return doctitle;
-    }
-
-    public String doctitle() {
-        return (String) doctitle(new HashMap<Object, Object>());
-    }
+    List<AbstractBlock> blocks();
 
 }

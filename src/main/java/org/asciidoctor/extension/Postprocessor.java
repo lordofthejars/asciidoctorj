@@ -3,8 +3,8 @@ package org.asciidoctor.extension;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.asciidoctor.ast.RubyDocument;
 import org.asciidoctor.ast.Document;
-import org.asciidoctor.ast.DocumentRuby;
 
 public abstract class Postprocessor extends Processor {
 
@@ -16,10 +16,10 @@ public abstract class Postprocessor extends Processor {
         super(config);
     }
 
-    public abstract String process(Document document, String output);
+    public abstract String process(RubyDocument rubyDocument, String output);
     
-    public String process(DocumentRuby documentRuby, String output) {
-    	return process(document(documentRuby), output);
+    public String process(Document document, String output) {
+    	return process(rubyDocument(document), output);
     }
     
 }

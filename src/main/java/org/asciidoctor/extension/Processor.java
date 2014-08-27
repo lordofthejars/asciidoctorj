@@ -85,8 +85,8 @@ public class Processor {
                 "new", parameters, Inline.class);
     }
     
-    protected Document document(DocumentRuby documentRuby) {
-    	return new Document(documentRuby, rubyRuntime);
+    protected RubyDocument rubyDocument(Document document) {
+    	return new RubyDocument(document, rubyRuntime);
     }
     
     private Block createBlock(AbstractBlock parent, String context,

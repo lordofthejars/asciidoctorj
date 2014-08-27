@@ -2,11 +2,11 @@ package org.asciidoctor.ast;
 
 import org.jruby.Ruby;
 
-public class SectionImpl extends AbstractBlockImpl implements Section {
+public class RubySection extends RubyAbstractBlock implements Section {
 
     private Section delegate;
     
-    public SectionImpl(Section blockDelegate, Ruby runtime) {
+    public RubySection(Section blockDelegate, Ruby runtime) {
         super(blockDelegate, runtime);
         this.delegate = blockDelegate;
     }

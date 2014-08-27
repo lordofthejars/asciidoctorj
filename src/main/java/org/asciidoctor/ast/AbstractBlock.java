@@ -21,7 +21,7 @@ public interface AbstractBlock {
 
     String render();
 
-    DocumentRuby document();
+    Document document();
 
     String context();
 

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 import java.io.File;
 
 import org.asciidoctor.Asciidoctor;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class WhenRubyExtensionIsRegistered {
 
-    private Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+    private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
 
     @Test
     public void ruby_extension_should_be_registered() {

@@ -3,8 +3,8 @@ package org.asciidoctor.extension;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.asciidoctor.ast.RubyDocument;
 import org.asciidoctor.ast.Document;
-import org.asciidoctor.ast.DocumentRuby;
 
 public abstract class Treeprocessor extends Processor {
 
@@ -16,10 +16,10 @@ public abstract class Treeprocessor extends Processor {
         super(config);
     }
 
-    public abstract Document process(Document document);
+    public abstract RubyDocument process(RubyDocument rubyDocument);
     
-    public DocumentRuby process(DocumentRuby documentRuby) {
-    	return process(document(documentRuby));
+    public Document process(Document document) {
+    	return process(rubyDocument(document));
     }
     
 }

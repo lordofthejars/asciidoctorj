@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 
-import org.asciidoctor.ast.Document;
+import org.asciidoctor.ast.RubyDocument;
 
 public class NextLineEmptyPreprocessor extends Preprocessor {
 
@@ -14,7 +14,7 @@ public class NextLineEmptyPreprocessor extends Preprocessor {
 	}
 
 	@Override
-	public PreprocessorReader process(Document document,
+	public PreprocessorReader process(RubyDocument rubyDocument,
 			PreprocessorReader reader) {
 
 		assertThat(reader.isNextLineEmpty(), is(false));

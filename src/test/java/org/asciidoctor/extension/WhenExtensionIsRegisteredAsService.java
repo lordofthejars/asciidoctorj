@@ -11,7 +11,7 @@ import java.io.IOException;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.Options;
 import org.asciidoctor.SafeMode;
-import org.asciidoctor.internal.JRubyAsciidoctor;
+import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -30,7 +30,7 @@ public class WhenExtensionIsRegisteredAsService {
     public void extensions_should_be_correctly_added() throws IOException {
 
         
-        Asciidoctor asciidoctor = JRubyAsciidoctor.create();
+        Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
         
         //To avoid registering the same extension over and over for all tests, service is instantiated manually.
         new ArrowsAndBoxesExtension().register(asciidoctor);

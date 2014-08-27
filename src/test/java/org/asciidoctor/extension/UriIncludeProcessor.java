@@ -8,7 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-import org.asciidoctor.ast.DocumentRuby;
+import org.asciidoctor.ast.Document;
 
 public class UriIncludeProcessor extends IncludeProcessor {
 
@@ -22,7 +22,7 @@ public class UriIncludeProcessor extends IncludeProcessor {
     }
 
     @Override
-    public void process(DocumentRuby document, PreprocessorReader reader, String target,
+    public void process(Document document, PreprocessorReader reader, String target,
             Map<String, Object> attributes) {
 
         StringBuilder content = readContent(target);
