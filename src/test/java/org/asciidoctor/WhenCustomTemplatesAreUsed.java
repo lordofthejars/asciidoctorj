@@ -1,12 +1,11 @@
 package org.asciidoctor;
 
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.asciidoctor.OptionsBuilder.options;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 import java.io.File;
 
-import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,13 +13,13 @@ import org.junit.Test;
 
 public class WhenCustomTemplatesAreUsed {
 
-    private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
+    private Asciidoctor asciidoctor = Asciidoctor.Factory.create();
     
     @Test
     public void document_should_be_rendered_using_given_template_dir() {
         
         Options options = options().templateDir(new File("target/test-classes/src/custom-backends/haml/html5-tweaks")).toFile(false).get();
-        String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+        String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
         
         Document doc = Jsoup.parse(renderContent, "UTF-8");
         Element paragraph = doc.select("div.content").first();

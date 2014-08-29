@@ -15,7 +15,7 @@ public interface AsciidoctorJ {
     Document load(String content, Map<String, Object> options);
     Document load_file(File filename, Map<String, Object> options);
     
-   <T extends ExtensionRegistry> T create(final Class<T> type) throws IllegalArgumentException;
+   <T extends ExtensionRegistry> T createExtensionRegistry(final Class<T> type) throws IllegalArgumentException;
    void unregisterAllExtensions();
    
    void shutdown();

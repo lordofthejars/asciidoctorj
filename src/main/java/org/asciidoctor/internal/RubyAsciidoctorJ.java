@@ -204,7 +204,7 @@ public class RubyAsciidoctorJ implements AsciidoctorJ {
     }
     
     @Override
-    public <T extends ExtensionRegistry> T create(Class<T> type) throws IllegalArgumentException {
+    public <T extends ExtensionRegistry> T createExtensionRegistry(Class<T> type) throws IllegalArgumentException {
         // TODO this may change when Javascript is accepted but for now we can blindly call constructor because all classes implements the same constructor
         try {
             Constructor<T> constructor = type.getConstructor(AsciidoctorModule.class, Ruby.class);
@@ -241,7 +241,7 @@ public class RubyAsciidoctorJ implements AsciidoctorJ {
     @Override
     public Document load_file(File filename, Map<String, Object> options) {
         RubyHash rubyHash = RubyHashUtil.convertMapToRubyHashWithSymbols(rubyRuntime, options);
-        return new RubyDocument(this.asciidoctorModule.load(filename.getAbsolutePath(), rubyHash), this.rubyRuntime);
+        return new RubyDocument(this.asciidoctorModule.load_file(filename.getAbsolutePath(), rubyHash), this.rubyRuntime);
     }
 
     /**

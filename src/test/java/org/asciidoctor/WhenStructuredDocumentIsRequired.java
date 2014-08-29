@@ -14,7 +14,6 @@ import java.util.Map;
 import org.asciidoctor.ast.ContentPart;
 import org.asciidoctor.ast.DocumentHeader;
 import org.asciidoctor.ast.StructuredDocument;
-import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -24,7 +23,7 @@ public class WhenStructuredDocumentIsRequired {
 	@Rule
 	public TemporaryFolder testFolder = new TemporaryFolder();
 
-	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
+	private Asciidoctor asciidoctor = Asciidoctor.Factory.create();
 
 	@Test
 	public void empty_parent_title_makes_subsection_be_null_when_is_parsed() {

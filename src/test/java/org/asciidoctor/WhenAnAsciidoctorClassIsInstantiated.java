@@ -29,7 +29,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
-import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -42,7 +41,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 	@Rule
 	public TemporaryFolder testFolder = new TemporaryFolder();
 
-	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
+	private Asciidoctor asciidoctor = Asciidoctor.Factory.create();
 
 	@Test
 	public void content_should_be_read_from_reader_and_written_to_writer() throws IOException, SAXException,
@@ -50,7 +49,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 
 		FileReader inputAsciidoctorFile = new FileReader(new File("target/test-classes/rendersample.asciidoc"));
 		StringWriter rendererWriter = new StringWriter();
-		asciidoctor.render(inputAsciidoctorFile, rendererWriter, options().asMap());
+		asciidoctor.convert(inputAsciidoctorFile, rendererWriter, options().asMap());
 
 		StringBuffer renderedContent = rendererWriter.getBuffer();
 		assertRenderedFile(renderedContent.toString());
@@ -61,7 +60,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 	public void file_document_should_be_rendered_into_default_backend() throws IOException, SAXException,
 			ParserConfigurationException {
 
-		String render_file = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"),
+		String render_file = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"),
 		        options().toFile(false).get());
 		assertRenderedFile(render_file);
 
@@ -72,7 +71,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 			throws FileNotFoundException, IOException, SAXException, ParserConfigurationException {
 
 		Options options = options().inPlace(true).get();
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 
 		File expectedFile = new File("target/test-classes/rendersample.html");
 
@@ -86,7 +85,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 	public void file_document_should_be_rendered_into_current_directory() throws FileNotFoundException, IOException,
 			SAXException, ParserConfigurationException {
 
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options()
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options()
 				.inPlace(true).asMap());
 
 		File expectedFile = new File("target/test-classes/rendersample.html");
@@ -103,7 +102,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 
 		Map<String, Object> options = options().inPlace(false).safe(SafeMode.UNSAFE).toDir(testFolder.getRoot())
 				.asMap();
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 
 		File expectedFile = new File(testFolder.getRoot(), "rendersample.html");
 
@@ -120,7 +119,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		File output = testFolder.newFolder("target","test-classes");
 		Options options = options().inPlace(false).baseDir(testFolder.getRoot())
 				.toFile(new File("target/test-classes/rendersample.html")).get();
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 		
 		File renderedFile = new File(output, "rendersample.html");
 		assertThat(renderedFile.exists(), is(true));
@@ -132,7 +131,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 
 		Options options = options().inPlace(false).safe(SafeMode.UNSAFE).toDir(testFolder.getRoot()).get();
 
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 
 		File expectedFile = new File(testFolder.getRoot(), "rendersample.html");
 
@@ -147,7 +146,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		Map<String, Object> attributes = attributes().backend("docbook").asMap();
 		Map<String, Object> options = options().inPlace(true).attributes(attributes).asMap();
 
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 
 		File expectedFile = new File("target/test-classes/rendersample.xml");
 
@@ -164,7 +163,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		Attributes attributes = attributes().backend("docbook").get();
 		Options options = options().inPlace(true).attributes(attributes).get();
 
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 
 		File expectedFile = new File("target/test-classes/rendersample.xml");
 
@@ -180,7 +179,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 
 		Options options = options().inPlace(true).backend("docbook").get();
 
-		String renderContent = asciidoctor.renderFile(new File("target/test-classes/rendersample.asciidoc"), options);
+		String renderContent = asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), options);
 
 		File expectedFile = new File("target/test-classes/rendersample.xml");
 
@@ -204,7 +203,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		Map<String, Object> attributes = attributes().localDate(customDate.getTime()).asMap();
 		Map<String, Object> options = options().attributes(attributes).asMap();
 
-		String render_file = asciidoctor.render(toString(content), options);
+		String render_file = asciidoctor.convert(toString(content), options);
 		assertRenderedLocalDateContent(render_file, "2012-12-05.");
 
 	}
@@ -223,7 +222,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		Map<String, Object> attributes = attributes().localTime(customTime.getTime()).asMap();
 		Map<String, Object> options = options().attributes(attributes).asMap();
 
-		String render_file = asciidoctor.render(toString(content), options);
+		String render_file = asciidoctor.convert(toString(content), options);
 
 		Format TIME_FORMAT = new SimpleDateFormat("HH:mm:ss z");
 
@@ -236,7 +235,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 			ParserConfigurationException {
 
 		InputStream content = new FileInputStream("target/test-classes/rendersample.asciidoc");
-		String render_file = asciidoctor.render(toString(content), new HashMap<String, Object>());
+		String render_file = asciidoctor.convert(toString(content), new HashMap<String, Object>());
 
 		assertRenderedFile(render_file);
 	}
@@ -244,7 +243,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 	@Test
 	public void all_files_from_a_collection_should_be_rendered_into_an_array() {
 
-		String[] allRenderedFiles = asciidoctor.renderFiles(
+		String[] allRenderedFiles = asciidoctor.convertFiles(
 				Arrays.asList(new File("target/test-classes/rendersample.asciidoc")), options().toFile(false).get());
 		assertThat(allRenderedFiles, is(arrayWithSize(1)));
 
@@ -256,7 +255,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		Map<String, Object> options = options().inPlace(false).safe(SafeMode.UNSAFE).toDir(testFolder.getRoot())
 				.asMap();
 
-		String[] allRenderedFiles = asciidoctor.renderFiles(
+		String[] allRenderedFiles = asciidoctor.convertFiles(
 				Arrays.asList(new File("target/test-classes/rendersample.asciidoc")), options);
 		assertThat(allRenderedFiles, is(arrayWithSize(0)));
 
@@ -265,7 +264,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 	@Test
 	public void all_files_from_directory_and_subdirectories_should_be_rendered_into_an_array() {
 
-		String[] allRenderedFiles = asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("target/test-classes/src"),
+		String[] allRenderedFiles = asciidoctor.convertDirectory(new AsciiDocDirectoryWalker("target/test-classes/src"),
 		        options().toFile(false).get());
 		assertThat(allRenderedFiles, is(arrayWithSize(4)));
 
@@ -277,7 +276,7 @@ public class WhenAnAsciidoctorClassIsInstantiated {
 		Map<String, Object> options = options().inPlace(false).safe(SafeMode.UNSAFE).toDir(testFolder.getRoot())
 				.asMap();
 
-		String[] allRenderedFiles = asciidoctor.renderDirectory(new AsciiDocDirectoryWalker("target/test-classes/src"), options);
+		String[] allRenderedFiles = asciidoctor.convertDirectory(new AsciiDocDirectoryWalker("target/test-classes/src"), options);
 		assertThat(allRenderedFiles, is(arrayWithSize(0)));
 
 	}

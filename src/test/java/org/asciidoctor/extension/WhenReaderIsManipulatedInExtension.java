@@ -2,58 +2,45 @@ package org.asciidoctor.extension;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.asciidoctor.Asciidoctor;
-import org.asciidoctor.ast.RubyDocument;
-import org.asciidoctor.internal.JRubyAsciidoctorOld;
 import org.junit.Test;
 
 public class WhenReaderIsManipulatedInExtension {
 
-	private Asciidoctor asciidoctor = JRubyAsciidoctorOld.create();
+    private Asciidoctor asciidoctor = Asciidoctor.Factory.create();
 
+    @Test
+    public void currentLineNumberShouldBeReturned() {
 
-	@Test
-	public void currentLineNumberShouldBeReturned() {
+        JavaExtensionRegistry javaExtensionRegistry = asciidoctor.createExtensionRegistry(JavaExtensionRegistry.class);
 
-		JavaExtensionRegistry javaExtensionRegistry = asciidoctor
-				.javaExtensionRegistry();
+        javaExtensionRegistry.preprocessor(NumberLinesPreprocessor.class);
 
-		javaExtensionRegistry.preprocessor(NumberLinesPreprocessor.class);
+        asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), new HashMap<String, Object>());
 
-		asciidoctor.renderFile(new File(
-				"target/test-classes/rendersample.asciidoc"),
-				new HashMap<String, Object>());
+    }
 
-	}
+    @Test
+    public void hasMoreLinesShouldBeReturned() {
 
-	@Test
-	public void hasMoreLinesShouldBeReturned() {
+        JavaExtensionRegistry javaExtensionRegistry = asciidoctor.createExtensionRegistry(JavaExtensionRegistry.class);
 
-		JavaExtensionRegistry javaExtensionRegistry = asciidoctor
-				.javaExtensionRegistry();
+        javaExtensionRegistry.preprocessor(HasMoreLinesPreprocessor.class);
 
-		javaExtensionRegistry.preprocessor(HasMoreLinesPreprocessor.class);
+        asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), new HashMap<String, Object>());
 
-		asciidoctor.renderFile(new File(
-				"target/test-classes/rendersample.asciidoc"),
-				new HashMap<String, Object>());
+    }
 
-	}
-	
-	@Test
-	public void isNextLineEmptyShouldBeReturned() {
+    @Test
+    public void isNextLineEmptyShouldBeReturned() {
 
-		JavaExtensionRegistry javaExtensionRegistry = asciidoctor
-				.javaExtensionRegistry();
+        JavaExtensionRegistry javaExtensionRegistry = asciidoctor.createExtensionRegistry(JavaExtensionRegistry.class);
 
-		javaExtensionRegistry.preprocessor(NextLineEmptyPreprocessor.class);
+        javaExtensionRegistry.preprocessor(NextLineEmptyPreprocessor.class);
 
-		asciidoctor.renderFile(new File(
-				"target/test-classes/rendersample.asciidoc"),
-				new HashMap<String, Object>());
+        asciidoctor.convertFile(new File("target/test-classes/rendersample.asciidoc"), new HashMap<String, Object>());
 
-	}
-	
+    }
+
 }

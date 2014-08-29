@@ -442,7 +442,7 @@ public class Asciidoctor {
     }
     
     public <T extends ExtensionRegistry> T createExtensionRegistry(final Class<T> type) {
-        return this.asciidoctorJ.create(type);
+        return this.asciidoctorJ.createExtensionRegistry(type);
     }
 
     /**
@@ -556,6 +556,10 @@ public class Asciidoctor {
      */
     public Document loadFile(File file, Map<String, Object> options) {
         return this.asciidoctorJ.load_file(file, options);
+    }
+    
+    public AsciidoctorJ getAsciidoctorJ() {
+        return asciidoctorJ;
     }
 
 }
