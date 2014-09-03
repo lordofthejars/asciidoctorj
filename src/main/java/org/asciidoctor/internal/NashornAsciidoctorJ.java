@@ -1,12 +1,13 @@
 package org.asciidoctor.internal;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.script.Bindings;
-import javax.script.Invocable;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -19,6 +20,10 @@ import org.asciidoctor.extension.ExtensionRegistry;
 
 public class NashornAsciidoctorJ implements AsciidoctorJ {
 
+    private static final String ASCIIDOCTOR_VERSION = "1.5.0";
+    
+    private static final String ASCIIDOCTOR_ALL_PATH = "META-INF/resources/webjars/asciidoctor.js/" + ASCIIDOCTOR_VERSION + "/asciidoctor-all.min.js";
+    private static final String OPAL_PATH = "META-INF/resources/webjars/opal/0.6.2/opal.min.js";
     private static final String NASHORN_ENGINE = "nashorn";
     private ScriptEngine scriptEngine;
     private ScriptContext scriptContext;
@@ -46,15 +51,23 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
 
     private static void loadResources(ScriptEngine scriptEngine, SimpleScriptContext scriptContext) {
         try {
-            //TODO this must change to use webjars
-            scriptEngine.eval(new InputStreamReader(NashornAsciidoctorJ.class.getResourceAsStream("/opal.js")), scriptContext);
-            scriptEngine.eval(new InputStreamReader(NashornAsciidoctorJ.class.getResourceAsStream("/asciidoctor-all.js")), scriptContext);
+            
+            scriptEngine.eval(readScript(OPAL_PATH), scriptContext);
+            scriptEngine.eval(readScript(ASCIIDOCTOR_ALL_PATH), scriptContext);
             scriptEngine.eval(new InputStreamReader(NashornAsciidoctorJ.class.getResourceAsStream("/asciidoctorjava.js")), scriptContext);
         } catch (ScriptException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
+    private static String readScript(String path) {
+        try (InputStream input = ClassLoader.getSystemResourceAsStream(path)) {
+          return IOUtils.readFull(input);
+        } catch (IOException e) {
+          throw new RuntimeException("Unable to read " + path, e);
+        }
+      }
+    
     private static SimpleScriptContext createScriptContext() {
         SimpleScriptContext simpleScriptContext = new SimpleScriptContext();
         Bindings bindings = new SimpleBindings();
