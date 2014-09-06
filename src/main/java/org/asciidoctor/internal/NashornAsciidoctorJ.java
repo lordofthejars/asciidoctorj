@@ -23,7 +23,6 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
     private static final String ASCIIDOCTOR_VERSION = "1.5.0";
     
     private static final String ASCIIDOCTOR_ALL_PATH = "META-INF/resources/webjars/asciidoctor.js/" + ASCIIDOCTOR_VERSION + "/asciidoctor-all.min.js";
-    private static final String OPAL_PATH = "META-INF/resources/webjars/opal/0.6.2/opal.min.js";
     private static final String NASHORN_ENGINE = "nashorn";
     private ScriptEngine scriptEngine;
     private ScriptContext scriptContext;
@@ -51,8 +50,6 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
 
     private static void loadResources(ScriptEngine scriptEngine, SimpleScriptContext scriptContext) {
         try {
-            
-            scriptEngine.eval(readScript(OPAL_PATH), scriptContext);
             scriptEngine.eval(readScript(ASCIIDOCTOR_ALL_PATH), scriptContext);
             scriptEngine.eval(new InputStreamReader(NashornAsciidoctorJ.class.getResourceAsStream("/asciidoctorjava.js")), scriptContext);
         } catch (ScriptException e) {
@@ -82,7 +79,6 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
 
     @Override
     public String convert(String source, Map<String, Object> options) {
-        
         Object renderedContent;
         
         try {
@@ -95,13 +91,12 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
         } catch (ScriptException e) {
             throw new IllegalArgumentException(e);
         }
-        
         return returnExpectedValue(renderedContent);
     }
 
     //TODO extract to NashornHashUtil class.
     private Object createHash2Options(Map<String, Object> options) throws ScriptException {
-        this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("listOptions", options.keySet());
+        this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("listOptions", options.keySet().toArray());
         this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("options", options);
         
         return this.scriptEngine.eval("Opal.hash2(listOptions, options)", this.scriptContext);
