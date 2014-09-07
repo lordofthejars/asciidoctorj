@@ -3,6 +3,7 @@ package org.asciidoctor;
 import static org.asciidoctor.OptionsBuilder.options;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -57,6 +58,19 @@ public class WhenAsciidoctorJIsUsedWithinNashorn {
         
         asciidoctorJ.convert("This is Asciidoctor", options.map());
         
+    }
+    
+    @Test
+    public void asciiDoc_file_should_be_rendered() {
+        Options options = options().inPlace(true).get();
+        String renderContent = asciidoctorJ.convert_file(new File("target/test-classes/rendersample.asciidoc"), options.map());
+
+        File expectedFile = new File("target/test-classes/rendersample.html");
+
+        assertThat(expectedFile.exists(), is(true));
+        assertThat(renderContent, is(nullValue()));
+
+        expectedFile.delete();
     }
     
 }

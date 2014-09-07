@@ -87,7 +87,7 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
             this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("hash2", hashOptions);
             
             //We cannot use Invocable interface due a bug found in Nashorn. That bug will be fixed in Java8u40. For now eval approach will be used.
-            renderedContent = (this.scriptEngine).eval("render(content, hash2);", this.scriptContext);
+            renderedContent = this.scriptEngine.eval("convert(content, hash2);", this.scriptContext);
         } catch (ScriptException e) {
             throw new IllegalArgumentException(e);
         }
@@ -104,14 +104,24 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
     
     @Override
     public String convert_file(File filename) {
-        // TODO Auto-generated method stub
-        return null;
+        return this.convert_file(filename, new HashMap<>());
     }
 
     @Override
     public String convert_file(File filename, Map<String, Object> options) {
-        // TODO Auto-generated method stub
-        return null;
+        Object renderedContent;
+        
+        try {
+            Object hashOptions = createHash2Options(options);
+            this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("file", filename.getAbsolutePath());
+            this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("hash2", hashOptions);
+            
+            //We cannot use Invocable interface due a bug found in Nashorn. That bug will be fixed in Java8u40. For now eval approach will be used.
+            renderedContent = this.scriptEngine.eval("convert_file(file, hash2);", this.scriptContext);
+        } catch (ScriptException e) {
+            throw new IllegalArgumentException(e);
+        }
+        return returnExpectedValue(renderedContent);
     }
 
     /**
