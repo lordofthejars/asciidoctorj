@@ -175,12 +175,12 @@ public class RubyAsciidoctorJ implements AsciidoctorJ {
     }
 
     @Override
-    public String convert_file(File filename) {
-        return this.convert_file(filename, new HashMap<>());
+    public String convertFile(File filename) {
+        return this.convertFile(filename, new HashMap<>());
     }
 
     @Override
-    public String convert_file(File filename, Map<String, Object> options) {
+    public String convertFile(File filename, Map<String, Object> options) {
         this.rubyGemsPreloader.preloadRequiredLibraries(options);
 
         if (log.isDebugEnabled()) {
@@ -239,7 +239,7 @@ public class RubyAsciidoctorJ implements AsciidoctorJ {
     }
 
     @Override
-    public Document load_file(File filename, Map<String, Object> options) {
+    public Document loadFile(File filename, Map<String, Object> options) {
         RubyHash rubyHash = RubyHashUtil.convertMapToRubyHashWithSymbols(rubyRuntime, options);
         return new RubyDocument(this.asciidoctorModule.load_file(filename.getAbsolutePath(), rubyHash), this.rubyRuntime);
     }

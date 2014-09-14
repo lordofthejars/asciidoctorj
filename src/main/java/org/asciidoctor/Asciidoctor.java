@@ -155,7 +155,7 @@ public class Asciidoctor {
      * @return returns nothing if the rendered output String is written to a file.
      */
     public String convertFile(File filename, Map<String, Object> options) {
-        return this.asciidoctorJ.convert_file(filename, options);
+        return this.asciidoctorJ.convertFile(filename, options);
     }
 
     /**
@@ -319,7 +319,7 @@ public class Asciidoctor {
      */
     public StructuredDocument readDocumentStructure(File filename, Map<String, Object> options) {
 
-        Document document = this.asciidoctorJ.load_file(filename, options);
+        Document document = this.asciidoctorJ.loadFile(filename, options);
         int maxDeepLevel = options.containsKey(STRUCTURE_MAX_LEVEL) ? (Integer) (options.get(STRUCTURE_MAX_LEVEL))
                 : DEFAULT_MAX_LEVEL;
         return toDocument(document, maxDeepLevel);
@@ -366,7 +366,7 @@ public class Asciidoctor {
      * @return header.
      */
     public DocumentHeader readDocumentHeader(File filename) {
-        Document document = this.asciidoctorJ.load_file(filename, new HashMap<>());
+        Document document = this.asciidoctorJ.loadFile(filename, new HashMap<>());
         return toDocumentHeader(document);
     }
 
@@ -555,7 +555,7 @@ public class Asciidoctor {
      * @return RubyDocument of given content.
      */
     public Document loadFile(File file, Map<String, Object> options) {
-        return this.asciidoctorJ.load_file(file, options);
+        return this.asciidoctorJ.loadFile(file, options);
     }
     
     public AsciidoctorJ getAsciidoctorJ() {

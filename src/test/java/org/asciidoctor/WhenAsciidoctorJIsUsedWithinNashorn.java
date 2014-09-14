@@ -63,7 +63,7 @@ public class WhenAsciidoctorJIsUsedWithinNashorn {
     @Test
     public void asciiDoc_file_should_be_rendered() {
         Options options = options().inPlace(true).get();
-        String renderContent = asciidoctorJ.convert_file(new File("target/test-classes/rendersample.asciidoc"), options.map());
+        String renderContent = asciidoctorJ.convertFile(new File("target/test-classes/rendersample.asciidoc"), options.map());
 
         File expectedFile = new File("target/test-classes/rendersample.html");
 
@@ -71,6 +71,23 @@ public class WhenAsciidoctorJIsUsedWithinNashorn {
         assertThat(renderContent, is(nullValue()));
 
         expectedFile.delete();
+    }
+    
+    @Test
+    public void asciiDoc_string_should_be_rendered_into_document() {
+        org.asciidoctor.ast.Document content = asciidoctorJ.load("*Hello World*", new HashMap<>());
+        content.title();
+    }
+    
+    @Test
+    public void asciiDoc_file_should_be_rendered_into_document() {
+        org.asciidoctor.ast.Document content = asciidoctorJ.loadFile(new File("target/test-classes/rendersample.asciidoc"), new HashMap<>());
+        content.title();
+    }
+    
+    @Test
+    public void should_return_the_runtime_version_of_asciidoctor() {
+        System.out.println(asciidoctorJ.asciidoctorVersion());
     }
     
 }

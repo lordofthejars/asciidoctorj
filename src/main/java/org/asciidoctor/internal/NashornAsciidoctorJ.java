@@ -103,12 +103,12 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
     }
     
     @Override
-    public String convert_file(File filename) {
-        return this.convert_file(filename, new HashMap<>());
+    public String convertFile(File filename) {
+        return this.convertFile(filename, new HashMap<>());
     }
 
     @Override
-    public String convert_file(File filename, Map<String, Object> options) {
+    public String convertFile(File filename, Map<String, Object> options) {
         Object renderedContent;
         
         try {
@@ -142,38 +142,64 @@ public class NashornAsciidoctorJ implements AsciidoctorJ {
     
     @Override
     public Document load(String content, Map<String, Object> options) {
-        // TODO Auto-generated method stub
-        return null;
+        Object renderedContent;
+        
+        try {
+            Object hashOptions = createHash2Options(options);
+            this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("content", content);
+            this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("hash2", hashOptions);
+            
+            //We cannot use Invocable interface due a bug found in Nashorn. That bug will be fixed in Java8u40. For now eval approach will be used.
+            renderedContent = this.scriptEngine.eval("load_document(content, hash2);", this.scriptContext);
+        } catch (ScriptException e) {
+            throw new IllegalArgumentException(e);
+        }
+        //This method does not work due a bug in JDK. It seems it will be fixed in JDK8u40.
+        //return ((Invocable)this.scriptEngine).getInterface(renderedContent, Document.class);
+        throw new UnsupportedOperationException("Because a bug in Nashorn this operation cannot be completed.");
     }
 
     @Override
-    public Document load_file(File filename, Map<String, Object> options) {
-        // TODO Auto-generated method stub
-        return null;
+    public Document loadFile(File filename, Map<String, Object> options) {
+        
+        Object renderedContent;
+        
+        try {
+            Object hashOptions = createHash2Options(options);
+            this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("file", filename.getAbsolutePath());
+            this.scriptContext.getBindings(ScriptContext.ENGINE_SCOPE).put("hash2", hashOptions);
+            
+            //We cannot use Invocable interface due a bug found in Nashorn. That bug will be fixed in Java8u40. For now eval approach will be used.
+            renderedContent = this.scriptEngine.eval("load_document_file(file, hash2);", this.scriptContext);
+        } catch (ScriptException e) {
+            throw new IllegalArgumentException(e);
+        }
+        //This method does not work due a bug in JDK. It seems it will be fixed in JDK8u40.
+        //return ((Invocable)this.scriptEngine).getInterface(renderedContent, Document.class);
+        throw new UnsupportedOperationException("Because a bug in Nashorn this operation cannot be completed.");
     }
 
     @Override
     public <T extends ExtensionRegistry> T createExtensionRegistry(Class<T> type) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("Because a bug in Nashorn this operation cannot be completed.");
     }
 
     @Override
     public void unregisterAllExtensions() {
-        // TODO Auto-generated method stub
-
+        throw new UnsupportedOperationException("Because a bug in Nashorn this operation cannot be completed.");
     }
 
     @Override
     public void shutdown() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public String asciidoctorVersion() {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return (String)this.scriptEngine.eval("runtime_version()", this.scriptContext);
+        } catch (ScriptException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
 }
