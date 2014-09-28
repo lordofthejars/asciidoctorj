@@ -1,0 +1,141 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctorj</artifactId>
+        <version>1.5.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>asciidoctor-ruby</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <jruby.version>1.7.9</jruby.version>
+        <haml.version>4.0.4</haml.version>
+        <tilt.version>2.0.0</tilt.version>
+        <coderay.version>1.1.0</coderay.version>
+        <cacheUri.version>0.0.5</cacheUri.version>
+        <threadsafe.version>0.3.4</threadsafe.version>
+        <asciidoctor.epub3.version>1.0.0.alpha.3</asciidoctor.epub3.version>
+        <erubis.version>2.7.0</erubis.version>
+        <slim.version>2.0.2</slim.version>
+        <gem.home.directory>classes</gem.home.directory>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctor-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jruby</groupId>
+            <artifactId>jruby-complete</artifactId>
+            <version>${jruby.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>thread_safe</artifactId>
+            <version>${threadsafe.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>haml</artifactId>
+            <version>${haml.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>open-uri-cached</artifactId>
+            <version>${cacheUri.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>asciidoctor</artifactId>
+            <version>${asciidoctor.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>coderay</artifactId>
+            <version>${coderay.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>asciidoctor-epub3</artifactId>
+            <version>${asciidoctor.epub3.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>tilt</artifactId>
+            <version>${tilt.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>erubis</artifactId>
+            <version>${erubis.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>slim</artifactId>
+            <version>${slim.version}</version>
+            <type>gem</type>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>de.saumya.mojo</groupId>
+                <artifactId>gem-maven-plugin</artifactId>
+                <version>1.0.0-rc4</version>
+                <configuration>
+                    <jrubyVersion>${jruby.version}</jrubyVersion>
+                    <gemHome>${project.build.directory}/${gem.home.directory}</gemHome>
+                    <gemPath>${project.build.directory}/${gem.home.directory}</gemPath>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>initialize</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>rubygems-release</id>
+            <url>http://rubygems-proxy.torquebox.org/releases</url>
+        </repository>
+        <repository>
+            <id>rubygems-prerelease</id>
+            <url>http://rubygems-proxy.torquebox.org/prereleases</url>
+        </repository>
+    </repositories>
+
+</project>
