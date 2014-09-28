@@ -141,7 +141,7 @@ public class OptionsBuilder {
         this.options.setAttributes(attributes.map());
         return this;
     }
-    
+
     /**
      * Sets attributes used for rendering input.
      * 
@@ -235,6 +235,18 @@ public class OptionsBuilder {
      */
     public OptionsBuilder compact(boolean compact) {
         this.options.setCompact(compact);
+        return this;
+    }
+
+    /**
+     * Sets parse header only falg.
+     * 
+     * @param parseHeaderOnly
+     *            value.
+     * @return this instance.
+     */
+    public OptionsBuilder parseHeaderOnly(boolean parseHeaderOnly) {
+        this.options.setParseHeaderOnly(parseHeaderOnly);
         return this;
     }
 
