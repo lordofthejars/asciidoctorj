@@ -22,7 +22,7 @@ import org.asciidoctor.internal.IOUtils;
 
 public class NashornAsciidoctorJ implements AsciidoctorJ {
 
-    private static final String ASCIIDOCTOR_VERSION = "1.5.0";
+    private static final String ASCIIDOCTOR_VERSION = "1.5.2";
     
     private static final String ASCIIDOCTOR_ALL_PATH = "META-INF/resources/webjars/asciidoctor.js/" + ASCIIDOCTOR_VERSION + "/asciidoctor-all.min.js";
     private static final String NASHORN_ENGINE = "nashorn";
