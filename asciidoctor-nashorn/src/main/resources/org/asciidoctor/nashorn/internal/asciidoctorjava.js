@@ -16,4 +16,4 @@ var load_document_file = function(file, hash2) {
 
 var runtime_version = function(){
     return Opal.Asciidoctor.scope.VERSION;
-}
+};
